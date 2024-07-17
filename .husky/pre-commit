@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo '🧐 Checking for lint errors...'
+sleep 2
+npx lint-staged ||
+(echo '😕 Lint errors or tests failed. Please fix them before commiting.' && exit 1)
