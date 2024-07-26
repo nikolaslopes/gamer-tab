@@ -1,6 +1,6 @@
 {
   "*.{js,jsx}": [
     "npm run lint:prettier:check",
-    "npm run lint:eslint:check"
+    "eslint"
   ]
 }
