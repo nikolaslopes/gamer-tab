@@ -1,4 +1,4 @@
-name: Linting
+name: 🧪 Linting
 
 on: pull_request
 
@@ -7,40 +7,72 @@ jobs:
     name: Prettier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 'lts/hydrogen'
+          node-version-file: '.nvmrc'
 
-      - run: npm ci
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - run: npm run lint:prettier:check
+      - name: 🧹 Run Prettier check
+        run: npm run lint:prettier:check
+
   eslint:
     name: Eslint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 'lts/hydrogen'
+          node-version-file: '.nvmrc'
 
-      - run: npm ci
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - run: npm run lint:eslint:check
+      - name: 🔍 Run ESLint check
+        run: npm run lint:eslint:check
+
   commitlint:
     name: commitlint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 'lts/hydrogen'
+          node-version-file: '.nvmrc'
 
-      - run: npm ci
+      - name: 📦 Install dependencies
+        run: npm ci
 
-      - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+      - name: 📑 Validate commit messages
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  secretlint:
+    name: Secretlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🕵️‍♂️ Scan for secrets with Secretlint
+        run: npm run lint:secretlint:check -- --format=unix

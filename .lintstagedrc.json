@@ -1,6 +1,7 @@
 {
-  "*.{js,jsx}": [
+  "*.{js,ts,tsx,json,md}": [
     "npm run lint:prettier:check",
-    "eslint"
+    "eslint",
+    "secretlint"
   ]
 }
