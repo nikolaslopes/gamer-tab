@@ -22,7 +22,7 @@ jobs:
         run: npm run lint:prettier:check
 
   eslint:
-    name: EsLint
+    name: Eslint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
