@@ -1,8 +1,7 @@
 function Home() {
-  const token =
-    '60IgiOUyPTUwF0o2G8oKMLWSvSiLYy84aDx88iei8vafGlBVhWq1su5u8It9wzSB';
+  const apiKey = 'ghp_1234567890abcdef1234567890abcdef1234';
 
-  console.log('Token:', token);
+  console.log('Token:', apiKey);
 
   return <h1>App in construction...</h1>;
 }
