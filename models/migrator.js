@@ -1,6 +1,7 @@
 import migrationRunner from 'node-pg-migrate';
 import { resolve } from 'node:path';
 import database from 'infra/database.js';
+import { ServiceError } from 'infra/errors';
 
 const defaultMigrationsOptions = {
   dryRun: true,
@@ -33,11 +34,20 @@ async function runPendingMigrations() {
   try {
     dbClient = await database.getNewClient();
 
-    const migratedMigrations = await migrationRunner({
-      ...defaultMigrationsOptions,
-      dbClient,
-      dryRun: false,
-    });
+    let migratedMigrations;
+
+    try {
+      migratedMigrations = await migrationRunner({
+        ...defaultMigrationsOptions,
+        dbClient,
+        dryRun: false,
+      });
+    } catch (error) {
+      throw new ServiceError({
+        message: 'Failed to run databse migrations.',
+        cause: error,
+      });
+    }
 
     return migratedMigrations;
   } finally {
